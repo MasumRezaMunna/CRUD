@@ -3,14 +3,14 @@ const cors = require("cors");
 const { MongoClient, ServerApiVersion } = require("mongodb");
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // middleware
 app.use(cors());
 app.use(express.json());
 
 const uri =
-  "mongodb+srv://MasumRezaMunna:JRiNIZEhnnI7uBa6@cluster0.tefuwz4.mongodb.net/?appName=Cluster0";
+  "mongodb+srv://MasumRezaMunna:JRiNIZEhnnI7uBa6@cluster0.bnkmq1v.mongodb.net/?appName=Cluster0";
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -22,6 +22,14 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
+    await client.connect()
+
+    // add database related apis here
+      app.post('/users', (req,res) =>{
+        const newUser = req.body;
+        console.log('user info', newUser)
+      })
+
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
@@ -40,4 +48,3 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   console.log(`Simple Crud server is running on port ${port}`);
 });
-// iGhJ48fhHggju9Sf Project 01
