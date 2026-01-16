@@ -1,16 +1,16 @@
 const express = require("express");
-const corss = require("corss");
+const cors = require("cors");
 const { MongoClient, ServerApiVersion } = require("mongodb");
 
 const app = express();
 const port = 3000;
 
 // middleware
-app.use(corss());
+app.use(cors());
 app.use(express.json());
 
 const uri =
-  "mongodb+srv://masumrezamunna2005_db_user:iGhJ48fhHggju9Sf@cluster01.tefuwz4.mongodb.net/?appName=Cluster01";
+  "mongodb+srv://MasumRezaMunna:JRiNIZEhnnI7uBa6@cluster0.tefuwz4.mongodb.net/?appName=Cluster0";
 
 const client = new MongoClient(uri, {
   serverApi: {
