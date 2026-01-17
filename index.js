@@ -22,13 +22,25 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    await client.connect()
+    await client.connect();
+
+    const usersDB = client.db("usersDB");
+    const usersCollection = usersDB.collection("users");
+
+
+    app.get('/users', async (req, res) =>{
+      const cursor = usersCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
 
     // add database related apis here
-      app.post('/users', (req,res) =>{
-        const newUser = req.body;
-        console.log('user info', newUser)
-      })
+    app.post("/users", async (req, res) => {
+      const newUser = req.body;
+      console.log("user info", newUser);
+      const result = await usersCollection.insertOne(newUser);
+      res.send(result);
+    });
 
     await client.db("admin").command({ ping: 1 });
     console.log(
